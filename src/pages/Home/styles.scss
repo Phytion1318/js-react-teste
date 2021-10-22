@@ -1,0 +1,20 @@
+$margin: 20px;
+
+body {
+background-color: #DEDEDE;
+
+}
+.page-Dashboard {
+  padding: $margin;
+  background-color: #DEDEDE;
+
+  height: 100%;
+
+  .MuiFormControl-fullWidth, .MuiButton-contained {
+    margin-top: $margin;
+  }
+}
+
+.dashboard-cards {
+  display: inline;
+}
