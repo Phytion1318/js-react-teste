@@ -1,17 +1,18 @@
 
 import {BrowserRouter, Switch, Route} from "react-router-dom";
-import Contacts from "./pages/Contacts";
+
+import Clients from "./pages/Clients"
+import Navbar from "./components/Navbar";
+
 import Home from "./pages/Home"
 
 function App() {
   return (
     <BrowserRouter>
-
-
+      <Navbar/>
       <Switch>
-      <Route path="/" component={Home}/>
-      <Route path="/contatos" component={Contacts}/>
-
+        <Route path="/clientes" component={Clients}/>
+        <Route path="/" component={Home}/>
       </Switch>
     </BrowserRouter>
   );
