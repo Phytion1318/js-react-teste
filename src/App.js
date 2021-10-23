@@ -2,9 +2,9 @@
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 
 import Clients from "./pages/Clients"
-import Navbar from "./components/Navbar";
-
+import Products from "./pages/Products"
 import Home from "./pages/Home"
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
       <Navbar/>
       <Switch>
         <Route path="/clientes" component={Clients}/>
+        <Route path="/produtos" component={Products}/>
         <Route path="/" component={Home}/>
       </Switch>
     </BrowserRouter>
