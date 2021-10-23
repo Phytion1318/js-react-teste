@@ -8,6 +8,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 
+const API_URL = "https://supermercado-front-08-default-rtdb.firebaseio.com"
 
 const style = {
   position: 'absolute',
@@ -21,9 +22,40 @@ const style = {
   p: 4,
 };
 
+function saveClient () {
+
+
+  let newClient = {
+    cpf: document.getElementById('cpf').value,
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    address: document.getElementById('address').value + " - " +  document.getElementById('cep').value,
+  }
+
+  const API_URL = "https://supermercado-front-08-default-rtdb.firebaseio.com"
+
+  fetch(API_URL + '/clients.json', {
+    method: 'POST',
+    body: JSON.stringify(newClient),
+  });
+
+  alert('Novo cliente cadastrado!')
+}
+
+function searchCEP() {
+  const INPUT_CEP = document.getElementById('cep');
+  const INPUT_ENDERECO = document.getElementById('address');
+
+  fetch(`https://viacep.com.br/ws/${INPUT_CEP.value}/json/`)
+    .then(resposta => resposta.json())
+    .then(dados => {
+      INPUT_ENDERECO.value = `${dados.logradouro}, ${dados.bairro}, ${dados.localidade}-${dados.uf}`;
+    });
+};
 
 export default function Clients() {
-const API_URL = "https://supermercado-front-08-default-rtdb.firebaseio.com"
+
 
 const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -78,19 +110,21 @@ useEffect( () => {
             </Typography>
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
             <div>
-              <form>
+              <form onSubmit={saveClient()}>
 
-                <TextField style={{marginBottom: 20}} fullWidth label="Nome" variant="filled" placeholder="Fulano Detal AssimAssado"/>
+                <TextField style={{marginBottom: 20}} id="cpf" required fullWidth label="CPF" variant="filled" placeholder="Ex: 012345678-90"/>
 
-                <TextField style={{marginBottom: 20}} fullWidth label="Email" variant="filled" placeholder="Ex: fulanodetal@gmail.com"/>
+                <TextField style={{marginBottom: 20}} id= "name" required fullWidth label="Nome" variant="filled" placeholder="Fulano Detal AssimAssado"/>
 
-                <TextField style={{marginBottom: 20}} fullWidth label="Telefone" variant="filled" placeholder="Ex: (DDD) 98765-4321"/>
+                <TextField style={{marginBottom: 20}} id="email" required fullWidth label="Email" variant="filled" placeholder="Ex: fulanodetal@gmail.com"/>
 
-                <TextField style={{marginBottom: 20}} fullWidth label="Telefone"  variant="filled" placeholder="Ex: 67891-011"/>
+                <TextField style={{marginBottom: 20}} id="phone" required fullWidth label="Telefone" variant="filled" placeholder="Ex: (DDD) 98765-4321"/>
 
-                <TextField style={{marginBottom: 20}} fullWidth label="CEP" variant="filled" placeholder="Bairro Coisado, Rua Aculá Número 123"/>
+                <TextField style={{marginBottom: 20}} id="cep" required fullWidth label="Telefone"  variant="filled" placeholder="Ex: 67891-011" onblur="searchCEP()"/>
 
-                <Button style={{marginBottom: 20}} fullWidth color="primary" size="large" variant="contained">
+                <TextField style={{marginBottom: 20}} id="adress" required fullWidth label="CEP" variant="filled" placeholder="Bairro Coisado, Rua Aculá Número 123"/>
+
+                <Button onClick={saveClient()} style={{marginBottom: 20}} fullWidth color="primary" size="large" variant="contained">
                   Enviar
                 </Button>
               </form>
@@ -104,7 +138,7 @@ useEffect( () => {
 
     <Divider/>
 
-        <table class="table table-hover table-striped">
+        <table class=" tabelinha  table table-hover table-striped">
         <thead class="table-dark">
         <tr>
         <th>CPF</th>
